@@ -1,0 +1,40 @@
+######## dev|ci #########
+apiVersion: v1
+data:
+  api-url: https://online.dev.gray.net/secure/fancy
+kind: ConfigMap
+metadata:
+  annotations:
+    ag/deploy-to: dev|ci-.*
+  name: app-fancy
+---
+######## int #########
+apiVersion: v1
+data:
+  api-url: https://online.int.gray.net/secure/fancy
+kind: ConfigMap
+metadata:
+  annotations:
+    ag/deploy-to: int
+  name: app-fancy
+---
+######## uat #########
+apiVersion: v1
+data:
+  api-url: https://online.uat.gray.net/secure/fancy
+kind: ConfigMap
+metadata:
+  annotations:
+    ag/deploy-to: uat
+  name: app-fancy
+---
+######## prod #########
+apiVersion: v1
+data:
+  api-url: https://online.allangray.co.za/secure/fancy
+kind: ConfigMap
+metadata:
+  annotations:
+    ag/deploy-to: prod
+  name: app-fancy
+---

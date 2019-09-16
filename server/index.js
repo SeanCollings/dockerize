@@ -5,10 +5,18 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
-const envvironment = process.env.NODE_ENV;
+const apiUrl = process.env.API_URL;
 
-app.get('/hello', (req, res) => res.send('Hello'))
+app.get('/health/ping', (req, res) => res.send('OK'))
+app.get('/hello', (req, res) => res.send(`Hello ${apiUrl}`))
 app.use('/assets', express.static('assets'))
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'assets/index.html')));
+app.get('*', (req, res) => {
+  const file = fs.readFileSync(path.join(__dirname, 'assets/index.html'), 'utf8');
 
-app.listen(port, () => console.log(`${envvironment} app listening on port ${port}!`))
+  const replaced = file.replace('###API_URL###', apiUrl);
+
+  res.send(replaced)
+}
+);
+
+app.listen(port, () => console.log(`${apiUrl} app listening on port ${port}!`))

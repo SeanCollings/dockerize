@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /$2
+    kubernetes.io/ingress.class: public
+  name: '{{ .projectName }}-online'
+spec:
+  rules:
+    - host: online.{{ .namespace }}.gray.net
+      http:
+        paths:
+          - backend:
+              serviceName: '{{ .projectName }}-online'
+              servicePort: http-service
+            path: /secure/fancy(/|$)(.*)
+  tls:
+    - hosts:
+        - online.{{ .namespace }}.gray.net

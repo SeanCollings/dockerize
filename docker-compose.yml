@@ -1,6 +1,6 @@
 version: '3.3'
 
-#docker run --rm  -v /home/dev/projects/demo:/app -w /app -p 7999:3000 7b0892ed3009 node server.js
+#docker run --rm  -v /home/dev/projects/demo:/app -w /app -p 7999:3000 -e API_URL=allangray.local.net 7b0892ed3009 node server.js
 
 services:
   app:
@@ -11,8 +11,9 @@ services:
     working_dir: /service
     ports:
       - '8080:8080'
+      - '8000:8080'
     command: ['npm', 'run', 'start:dev']
-
+    
   server:
     image: docker-registry.gray.net/common/node-devtools:10.10.4
     user: node
@@ -20,8 +21,10 @@ services:
       - ./server:/service
     working_dir: /service
     ports:
-      - '7999:3000'
+      - '7998:3000'
     command: ['npm', 'run', 'start:dev']
+    environment:
+      - API_URL=allangray.local.net
 
   # complete:
   #   image: docker-registry.gray.net/common/node-devtools:10.10.4

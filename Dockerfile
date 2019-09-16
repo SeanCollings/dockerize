@@ -1,6 +1,6 @@
 FROM docker-registry.gray.net/common/node:10.10.0
 
-ENV NODE_ENV=production
+#ENV NODE_ENV=production
 EXPOSE 3000
 
 WORKDIR /service

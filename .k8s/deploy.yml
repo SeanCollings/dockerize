@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    version: '{{ .version }}'
+    zone: public
+  name: '{{ .projectName }}-online'
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      name: '{{ .projectName }}-online'
+  template:
+    metadata:
+      labels:
+        name: '{{ .projectName }}-online'
+        version: '{{ .version }}'
+        zone: public
+    spec:
+      containers:
+      - image: docker-registry.gray.net/service/{{ .projectName }}:{{ .version }}
+        livenessProbe:
+          httpGet:
+            path: /health/ping
+            port: 3000
+          initialDelaySeconds: 600
+          periodSeconds: 10
+          timeoutSeconds: 1
+        name: '{{ .projectName }}-online'
+        ports:
+        - containerPort: 3000
+          name: service
+        readinessProbe:
+          httpGet:
+            path: /health/ping
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 300Mi
+          requests:
+            cpu: 100m
+            memory: 300Mi
+        {{ load ".k8s/online/env.yml" | absoluteIndent 8 }}

@@ -3,11 +3,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './index.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'index_bundle.js',
-        publicPath: '/assets/'
-    },
+    // output: {
+    //     path: path.resolve(__dirname, 'dist'),
+    //     filename: 'index_bundle.js',
+    //     publicPath: '/assets/'
+    // },
     module: {
         rules: [
             { test: /\.(js)$/, use: 'babel-loader' },
@@ -22,17 +22,19 @@ module.exports = {
     ],
     devServer: {
         //redirect api calls to backend server
-        proxy: {
-            '/api': {
-                target: {
-                    host: "back",
-                    protocol: 'http:',
-                    port: 8080
-                },
-                ignorePath: true,
-                changeOrigin: true,
-                secure: false
-            }
-        }
+        publicPath: '/',
+        filename: 'index.js',
+        // proxy: {
+        //     '/api': {
+        //         target: {
+        //             host: "back",
+        //             protocol: 'http:',
+        //             port: 8080
+        //         },
+        //         ignorePath: true,
+        //         changeOrigin: true,
+        //         secure: false
+        //     }
+        // }
     },
 };

@@ -1,0 +1,4 @@
+config:
+  projectName: app-fancy
+  teamName: web-weavers
+  imageName: docker-registry.gray.net/service/app-fancy
